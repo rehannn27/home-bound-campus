@@ -15,12 +15,15 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FoundRouteImport } from './routes/found'
 import { Route as LostRouteImport } from './routes/lost'
 import { Route as ScanRouteImport } from './routes/scan'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedMyClaimsRouteImport } from './routes/_authenticated/my-claims'
 import { Route as AuthenticatedMyPostsRouteImport } from './routes/_authenticated/my-posts'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as ItemsIdRouteImport } from './routes/items.$id'
+import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authenticated/chat.index'
+import { Route as AuthenticatedChatPeerIdRouteImport } from './routes/_authenticated/chat.$peerId'
 import { Route as AuthenticatedReportFoundRouteImport } from './routes/_authenticated/report.found'
 import { Route as AuthenticatedReportLostRouteImport } from './routes/_authenticated/report.lost'
 
@@ -53,6 +56,11 @@ const ScanRoute = ScanRouteImport.update({
   path: '/scan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -84,6 +92,16 @@ const ItemsIdRoute = ItemsIdRouteImport.update({
   path: '/items/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedChatIndexRoute = AuthenticatedChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedChatPeerIdRoute = AuthenticatedChatPeerIdRouteImport.update({
+  id: '/chat/$peerId',
+  path: '/chat/$peerId',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReportFoundRoute =
   AuthenticatedReportFoundRouteImport.update({
     id: '/report/found',
@@ -102,14 +120,17 @@ export interface FileRoutesByFullPath {
   '/found': typeof FoundRoute
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/my-claims': typeof AuthenticatedMyClaimsRoute
   '/my-posts': typeof AuthenticatedMyPostsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
+  '/chat/$peerId': typeof AuthenticatedChatPeerIdRoute
   '/report/found': typeof AuthenticatedReportFoundRoute
   '/report/lost': typeof AuthenticatedReportLostRoute
+  '/chat/': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,14 +138,17 @@ export interface FileRoutesByTo {
   '/found': typeof FoundRoute
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/my-claims': typeof AuthenticatedMyClaimsRoute
   '/my-posts': typeof AuthenticatedMyPostsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
+  '/chat/$peerId': typeof AuthenticatedChatPeerIdRoute
   '/report/found': typeof AuthenticatedReportFoundRoute
   '/report/lost': typeof AuthenticatedReportLostRoute
+  '/chat': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,14 +158,17 @@ export interface FileRoutesById {
   '/found': typeof FoundRoute
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/my-claims': typeof AuthenticatedMyClaimsRoute
   '/_authenticated/my-posts': typeof AuthenticatedMyPostsRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
+  '/_authenticated/chat/$peerId': typeof AuthenticatedChatPeerIdRoute
   '/_authenticated/report/found': typeof AuthenticatedReportFoundRoute
   '/_authenticated/report/lost': typeof AuthenticatedReportLostRoute
+  '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,14 +178,17 @@ export interface FileRouteTypes {
     | '/found'
     | '/lost'
     | '/scan'
+    | '/admin'
     | '/dashboard'
     | '/my-claims'
     | '/my-posts'
     | '/notifications'
     | '/profile'
     | '/items/$id'
+    | '/chat/$peerId'
     | '/report/found'
     | '/report/lost'
+    | '/chat/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,14 +196,17 @@ export interface FileRouteTypes {
     | '/found'
     | '/lost'
     | '/scan'
+    | '/admin'
     | '/dashboard'
     | '/my-claims'
     | '/my-posts'
     | '/notifications'
     | '/profile'
     | '/items/$id'
+    | '/chat/$peerId'
     | '/report/found'
     | '/report/lost'
+    | '/chat'
   id:
     | '__root__'
     | '/'
@@ -182,14 +215,17 @@ export interface FileRouteTypes {
     | '/found'
     | '/lost'
     | '/scan'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/my-claims'
     | '/_authenticated/my-posts'
     | '/_authenticated/notifications'
     | '/_authenticated/profile'
     | '/items/$id'
+    | '/_authenticated/chat/$peerId'
     | '/_authenticated/report/found'
     | '/_authenticated/report/lost'
+    | '/_authenticated/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -246,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -288,6 +331,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ItemsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/chat/': {
+      id: '/_authenticated/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof AuthenticatedChatIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chat/$peerId': {
+      id: '/_authenticated/chat/$peerId'
+      path: '/chat/$peerId'
+      fullPath: '/chat/$peerId'
+      preLoaderRoute: typeof AuthenticatedChatPeerIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/report/found': {
       id: '/_authenticated/report/found'
       path: '/report/found'
@@ -306,23 +363,29 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMyClaimsRoute: typeof AuthenticatedMyClaimsRoute
   AuthenticatedMyPostsRoute: typeof AuthenticatedMyPostsRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedChatPeerIdRoute: typeof AuthenticatedChatPeerIdRoute
   AuthenticatedReportFoundRoute: typeof AuthenticatedReportFoundRoute
   AuthenticatedReportLostRoute: typeof AuthenticatedReportLostRoute
+  AuthenticatedChatIndexRoute: typeof AuthenticatedChatIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMyClaimsRoute: AuthenticatedMyClaimsRoute,
   AuthenticatedMyPostsRoute: AuthenticatedMyPostsRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedChatPeerIdRoute: AuthenticatedChatPeerIdRoute,
   AuthenticatedReportFoundRoute: AuthenticatedReportFoundRoute,
   AuthenticatedReportLostRoute: AuthenticatedReportLostRoute,
+  AuthenticatedChatIndexRoute: AuthenticatedChatIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
