@@ -16,7 +16,11 @@ import { Route as FoundRouteImport } from './routes/found'
 import { Route as LostRouteImport } from './routes/lost'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedMyPostsRouteImport } from './routes/_authenticated/my-posts'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as ItemsIdRouteImport } from './routes/items.$id'
+import { Route as AuthenticatedReportFoundRouteImport } from './routes/_authenticated/report.found'
+import { Route as AuthenticatedReportLostRouteImport } from './routes/_authenticated/report.lost'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,10 +56,32 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyPostsRoute = AuthenticatedMyPostsRouteImport.update({
+  id: '/my-posts',
+  path: '/my-posts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNotificationsRoute =
+  AuthenticatedNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ItemsIdRoute = ItemsIdRouteImport.update({
   id: '/items/$id',
   path: '/items/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedReportFoundRoute =
+  AuthenticatedReportFoundRouteImport.update({
+    id: '/report/found',
+    path: '/report/found',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportLostRoute = AuthenticatedReportLostRouteImport.update({
+  id: '/report/lost',
+  path: '/report/lost',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -65,7 +91,11 @@ export interface FileRoutesByFullPath {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-posts': typeof AuthenticatedMyPostsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/items/$id': typeof ItemsIdRoute
+  '/report/found': typeof AuthenticatedReportFoundRoute
+  '/report/lost': typeof AuthenticatedReportLostRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -74,7 +104,11 @@ export interface FileRoutesByTo {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-posts': typeof AuthenticatedMyPostsRoute
+  '/notifications': typeof AuthenticatedNotificationsRoute
   '/items/$id': typeof ItemsIdRoute
+  '/report/found': typeof AuthenticatedReportFoundRoute
+  '/report/lost': typeof AuthenticatedReportLostRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,14 +119,39 @@ export interface FileRoutesById {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/my-posts': typeof AuthenticatedMyPostsRoute
+  '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/items/$id': typeof ItemsIdRoute
+  '/_authenticated/report/found': typeof AuthenticatedReportFoundRoute
+  '/_authenticated/report/lost': typeof AuthenticatedReportLostRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/found' | '/lost' | '/scan' | '/dashboard' | '/items/$id'
+    | '/'
+    | '/auth'
+    | '/found'
+    | '/lost'
+    | '/scan'
+    | '/dashboard'
+    | '/my-posts'
+    | '/notifications'
+    | '/items/$id'
+    | '/report/found'
+    | '/report/lost'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/found' | '/lost' | '/scan' | '/dashboard' | '/items/$id'
+  to:
+    | '/'
+    | '/auth'
+    | '/found'
+    | '/lost'
+    | '/scan'
+    | '/dashboard'
+    | '/my-posts'
+    | '/notifications'
+    | '/items/$id'
+    | '/report/found'
+    | '/report/lost'
   id:
     | '__root__'
     | '/'
@@ -102,7 +161,11 @@ export interface FileRouteTypes {
     | '/lost'
     | '/scan'
     | '/_authenticated/dashboard'
+    | '/_authenticated/my-posts'
+    | '/_authenticated/notifications'
     | '/items/$id'
+    | '/_authenticated/report/found'
+    | '/_authenticated/report/lost'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -166,6 +229,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-posts': {
+      id: '/_authenticated/my-posts'
+      path: '/my-posts'
+      fullPath: '/my-posts'
+      preLoaderRoute: typeof AuthenticatedMyPostsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/items/$id': {
       id: '/items/$id'
       path: '/items/$id'
@@ -173,15 +250,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ItemsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/report/found': {
+      id: '/_authenticated/report/found'
+      path: '/report/found'
+      fullPath: '/report/found'
+      preLoaderRoute: typeof AuthenticatedReportFoundRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/report/lost': {
+      id: '/_authenticated/report/lost'
+      path: '/report/lost'
+      fullPath: '/report/lost'
+      preLoaderRoute: typeof AuthenticatedReportLostRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedMyPostsRoute: typeof AuthenticatedMyPostsRoute
+  AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedReportFoundRoute: typeof AuthenticatedReportFoundRoute
+  AuthenticatedReportLostRoute: typeof AuthenticatedReportLostRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedMyPostsRoute: AuthenticatedMyPostsRoute,
+  AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedReportFoundRoute: AuthenticatedReportFoundRoute,
+  AuthenticatedReportLostRoute: AuthenticatedReportLostRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
