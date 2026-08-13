@@ -16,8 +16,10 @@ import { Route as FoundRouteImport } from './routes/found'
 import { Route as LostRouteImport } from './routes/lost'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedMyClaimsRouteImport } from './routes/_authenticated/my-claims'
 import { Route as AuthenticatedMyPostsRouteImport } from './routes/_authenticated/my-posts'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as ItemsIdRouteImport } from './routes/items.$id'
 import { Route as AuthenticatedReportFoundRouteImport } from './routes/_authenticated/report.found'
 import { Route as AuthenticatedReportLostRouteImport } from './routes/_authenticated/report.lost'
@@ -56,6 +58,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyClaimsRoute = AuthenticatedMyClaimsRouteImport.update({
+  id: '/my-claims',
+  path: '/my-claims',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyPostsRoute = AuthenticatedMyPostsRouteImport.update({
   id: '/my-posts',
   path: '/my-posts',
@@ -67,6 +74,11 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ItemsIdRoute = ItemsIdRouteImport.update({
   id: '/items/$id',
   path: '/items/$id',
@@ -91,8 +103,10 @@ export interface FileRoutesByFullPath {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-claims': typeof AuthenticatedMyClaimsRoute
   '/my-posts': typeof AuthenticatedMyPostsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
   '/report/found': typeof AuthenticatedReportFoundRoute
   '/report/lost': typeof AuthenticatedReportLostRoute
@@ -104,8 +118,10 @@ export interface FileRoutesByTo {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-claims': typeof AuthenticatedMyClaimsRoute
   '/my-posts': typeof AuthenticatedMyPostsRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
   '/report/found': typeof AuthenticatedReportFoundRoute
   '/report/lost': typeof AuthenticatedReportLostRoute
@@ -119,8 +135,10 @@ export interface FileRoutesById {
   '/lost': typeof LostRoute
   '/scan': typeof ScanRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/my-claims': typeof AuthenticatedMyClaimsRoute
   '/_authenticated/my-posts': typeof AuthenticatedMyPostsRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/items/$id': typeof ItemsIdRoute
   '/_authenticated/report/found': typeof AuthenticatedReportFoundRoute
   '/_authenticated/report/lost': typeof AuthenticatedReportLostRoute
@@ -134,8 +152,10 @@ export interface FileRouteTypes {
     | '/lost'
     | '/scan'
     | '/dashboard'
+    | '/my-claims'
     | '/my-posts'
     | '/notifications'
+    | '/profile'
     | '/items/$id'
     | '/report/found'
     | '/report/lost'
@@ -147,8 +167,10 @@ export interface FileRouteTypes {
     | '/lost'
     | '/scan'
     | '/dashboard'
+    | '/my-claims'
     | '/my-posts'
     | '/notifications'
+    | '/profile'
     | '/items/$id'
     | '/report/found'
     | '/report/lost'
@@ -161,8 +183,10 @@ export interface FileRouteTypes {
     | '/lost'
     | '/scan'
     | '/_authenticated/dashboard'
+    | '/_authenticated/my-claims'
     | '/_authenticated/my-posts'
     | '/_authenticated/notifications'
+    | '/_authenticated/profile'
     | '/items/$id'
     | '/_authenticated/report/found'
     | '/_authenticated/report/lost'
@@ -229,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-claims': {
+      id: '/_authenticated/my-claims'
+      path: '/my-claims'
+      fullPath: '/my-claims'
+      preLoaderRoute: typeof AuthenticatedMyClaimsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-posts': {
       id: '/_authenticated/my-posts'
       path: '/my-posts'
@@ -241,6 +272,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/items/$id': {
@@ -269,16 +307,20 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedMyClaimsRoute: typeof AuthenticatedMyClaimsRoute
   AuthenticatedMyPostsRoute: typeof AuthenticatedMyPostsRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportFoundRoute: typeof AuthenticatedReportFoundRoute
   AuthenticatedReportLostRoute: typeof AuthenticatedReportLostRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedMyClaimsRoute: AuthenticatedMyClaimsRoute,
   AuthenticatedMyPostsRoute: AuthenticatedMyPostsRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportFoundRoute: AuthenticatedReportFoundRoute,
   AuthenticatedReportLostRoute: AuthenticatedReportLostRoute,
 }
